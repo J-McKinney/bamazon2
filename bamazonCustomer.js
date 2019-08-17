@@ -12,20 +12,28 @@ var connection = mysql.createConnection({
     user: "root",
     // Your password
     password: myPassword,
-    database: "bamazondb"
+    database: "bamazon2db"
 });
 
 function productDisplay() {
     connection.query("SELECT * FROM products", function (error, response) {
         if (error) throw error;
-        console.log("\nThis is Bamazon!");
-        console.log("----------------");
-        console.log("Here is what we have to offer...");
-        console.log("\n--------------------------------");
+        console.log("\t\t╔════════════════════╗");
+        console.log("\t\t║  This is Bamazon!  ║");
+        console.log("\t\t╚════════════════════╝");
+        console.log("\t╔══════════════════════════════════╗");
+        console.log("\t║ Here is what we have to offer... ║");
+        console.log("\t╚══════════════════════════════════╝");
+        var displayTable = new Table({
+            head: ["Item ID", "Product Name", "Department", "Price", "Quantity"],
+            colWidths: [10, 30, 30, 30, 30]
+        });
         for (var i = 0; i < response.length; i++) {
-            console.log("ID#: " + response[i].item_id + " || " + "Product: " + response[i].product_name + " || " + "Department: " + response[i].department_name + " || " + "Price: " + response[i].price + " || " + "Quantity: " + response[i].stock_quantity);
-            console.log("\n--------------------------------------------------------------------------------------------");
+            displayTable.push(
+                [response[i].item_id, response[i].product_name, response[i].department_name, response[i].price, response[i].stock_quantity]
+            );
         }
+        console.log(displayTable.toString());
         startPrompt();
     });
 };
@@ -61,17 +69,17 @@ function pickID() {
         connection.query("SELECT * FROM products WHERE item_id = ?", userPurchase.inputID, function (error, response) {
             for (var i = 0; i < response.length; i++) {
                 if (userPurchase.inputQty > response[i].stock_quantity) {
-                    console.log("\n-----------------------------------------------------------------------------------");
-                    console.log("\nSorry, we do not have enough of that item, try again later...");
-                    console.log("\n-----------------------------------------------------------------------------------");
+                    console.log("\t\t╔═══════════════════════════════════════════════════════════════╗");
+                    console.log("\t\t║ Sorry, we do not have enough of that item, try again later... ║");
+                    console.log("\t\t╚═══════════════════════════════════════════════════════════════╝");
                     restart();
                 } else {
-                    console.log("\n------------------------------------------------------------------------------------");
-                    console.log("\nAwesome, we have just what you're looking for!");
-                    console.log("\n-----------------------------------------------------------------------------------");
-                    // var updateStock = JSON.stringify(response[i].stock_quantity - userPurchase.inputQty);
-                    // var purchaseID = JSON.stringify(userPurchase.inputID);
-                    confirmPurchase();
+                    console.log("\t\t╔══════════════════════════════════════════════════╗");
+                    console.log("\t\t║  Awesome, we have just what you're looking for!  ║");
+                    console.log("\t\t╚══════════════════════════════════════════════════╝");
+                    var updateStock = (response[i].stock_quantity - userPurchase.inputQty);
+                    var purchaseID = (userPurchase.inputID);
+                    confirmPurchase(updateStock, purchaseID);
                 }
             }
         })
@@ -91,13 +99,13 @@ function confirmPurchase(updateStock, purchaseID) {
             }, {
                 item_id: purchaseID
             }], function (error, response) { });
-            console.log("\n-------------------------------------------------------------------------------------");
-            console.log("\nThank you for shopping with us, you order will be shipped soon!");
-            console.log("\n-------------------------------------------------------------------------------------");
+            console.log("\t\t╔═════════════════════════════════════════════════════════════════╗");
+            console.log("\t\t║ Thank you for shopping with us, you order will be shipped soon! ║");
+            console.log("\t\t╚═════════════════════════════════════════════════════════════════╝");
         } else {
-            console.log("\n-------------------------------------------------------------------------------------");
-            console.log("\nThank you, come back soon...");
-            console.log("\n-------------------------------------------------------------------------------------");
+            console.log("\t\t╔══════════════════════════════╗");
+            console.log("\t\t║ Thank you, come back soon... ║");
+            console.log("\t\t╚══════════════════════════════╝");
         }
         restart();
     });
@@ -112,9 +120,9 @@ function restart() {
         if (answer.restart) {
             productDisplay();
         } else {
-            console.log("\n=====================================");
-            console.log("\nThanks, hope to see you again soon...");
-            console.log("\n=====================================");
+            console.log("\t\t╔═══════════════════════════════════════╗");
+            console.log("\t\t║ Thanks, hope to see you again soon... ║");
+            console.log("\t\t╚═══════════════════════════════════════╝");
         }
     });
 };
