@@ -46,3 +46,26 @@ VALUES ("Rotisserie Chicken", "Meat", 7.95, 8);
 INSERT INTO products (product_name, department_name,price, stock_quantity)
 VALUES ("Ground Beef", "Meat", 2.79, 25);
 
+
+CREATE TABLE departments (
+  department_id INT NOT NULL AUTO_INCREMENT,
+  department_name VARCHAR(50) NOT NULL,
+  over_head_costs DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (department_id)
+);
+
+--1
+INSERT INTO departments (department_name, over_head_costs)
+VALUES ("Dairy", 10000.00);
+--2
+INSERT INTO departments (department_name, over_head_costs)
+VALUES ("School Supplies", 10000.00);
+--3
+INSERT INTO departments (department_name, over_head_costs)
+VALUES ("Dry Goods", 10000.00);
+--4
+INSERT INTO departments (department_name, over_head_costs)
+VALUES ("Produce", 10000.00);
+--5
+INSERT INTO departments (department_name, over_head_costs)
+VALUES ("Meat", 10000.00);

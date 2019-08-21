@@ -74,9 +74,11 @@ function pickID() {
                     console.log("\t\t╚═══════════════════════════════════════════════════════════════╝");
                     restart();
                 } else {
+                    var total = userPurchase.inputQty * response[i].price;
                     console.log("\t\t╔══════════════════════════════════════════════════╗");
                     console.log("\t\t║  Awesome, we have just what you're looking for!  ║");
                     console.log("\t\t╚══════════════════════════════════════════════════╝");
+                    console.log("\n\t\tYour total is $" + total + "\n");
                     var updateStock = (response[i].stock_quantity - userPurchase.inputQty);
                     var purchaseID = (userPurchase.inputID);
                     confirmPurchase(updateStock, purchaseID);

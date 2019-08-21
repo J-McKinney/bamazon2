@@ -93,18 +93,48 @@ function addInventory() {
             type: "input",
             message: "How much stock would you like to add to this item?"
         }
-    ]).then(function(addedInventory) {
+    ]).then(function (addedInventory) {
         connection.query("UPDATE products SET ? WHERE ?", [{
             stock_quantity: addedInventory.addStock
         }, {
             item_id: addedInventory.item_id
-        }], function(error, response) {
+        }], function (error, response) {
         });
         managerPrompt();
     });
 };
 
-
+function addProduct() {
+    inquirer.prompt([{
+        type: "input",
+        name: "inputName",
+        message: "What is the name of the new product?"
+    }, {
+        // type: "list",
+        type: "input",
+        name: "inputDept",
+        // choices: ["Dairy", "School Supplies", "Dry Goods", "Produce", "Meat"]
+        message: "What is the name of the department you wish to add?"
+    }, {
+        type: "input",
+        name: "inputPrice",
+        message: "What is the price per item?",
+        // filter: Number
+    }, {
+        type: "input",
+        name: "inputQuantity",
+        message: "How many of this item do we have for stock?",
+        // filter: Number
+    }]).then(function (newProduct) {
+        connection.query("INSERT INTO products SET ?", {
+            product_name: newProduct.inputName,
+            department_name: newProduct.inputDept,
+            price: newProduct.inputPrice,
+            stock_quantity: newProduct.inputQuantity
+        }, function (error, response) { });
+        managerPrompt();
+    });
+};
 
 productDisplay();
 

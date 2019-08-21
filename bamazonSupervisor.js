@@ -19,7 +19,7 @@
 //║ foo  │ bar │ baz  ║
 //╟──────┼─────┼──────╢
 //║ frob │ bar │ quuz ║
-//╚══════╧═════╧═══ ═ ══╝
+//╚══════╧═════╧══════╝
 
 var inquirer = require("inquirer");
 var mysql = require("mysql");
@@ -46,18 +46,6 @@ var connection = mysql.createConnection({
     database: "bamazon2db"
 });
 
-function productDisplay() {
-    connection.query("SELECT * FROM products", function (error, response) {
-        if (error) throw error;
-        console.log("\t|,.~''~.,.~''~.,.~''~.,.~''~.,.~''~.,.~''~.,.~''~.,.~''~.,|");
-        console.log("\t|_______________Manager-Account-Information_______________|")
-        console.log("\t|,.~''~.,.~''~.,.~''~.,.~''~.,.~''~.,.~''~.,.~''~.,.~''~.,|");
-        for (var i = 0; i < response.length; i++) {
-              console.log("\nID#: " + response[i].item_id + " || " + "Product: " + response[i].product_name + " || " + "Department: " + response[i].department_name + " || " + "Price: " + response[i].price + " || " + "Quantity: " + response[i].stock_quantity);
-        }
-    });
-};
 
-productDisplay();
 
   // node bamazonSupervisor.js
