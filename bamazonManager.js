@@ -15,6 +15,10 @@ var connection = mysql.createConnection({
     database: "bamazon2db"
 });
 
+connection.connect(function (error) {
+    if (error) throw error;
+    productDisplay();
+})
 
 function managerPrompt() {
     inquirer.prompt([{
@@ -30,7 +34,7 @@ function managerPrompt() {
                 break;
             case "Add to Inventory": addInventory();
                 break;
-            case "Add a New Product": addProduct();
+            case "Add a New Product/s": addProduct();
                 break;
             case "Quit All": console.log("Good-Bye...");
         }
@@ -78,7 +82,7 @@ function lowInventory() {
             console.log("\t║------------No Low Inventory Items to Display------------║");
             console.log("\t╚═════════════════════════════════════════════════════════╝\n");
         }
-        connection.end();
+        productDisplay();
     });
 };
 
@@ -100,84 +104,38 @@ function addInventory() {
             item_id: addedInventory.item_id
         }], function (error, response) {
         });
-        managerPrompt();
+        productDisplay();
     });
 };
 
 function addProduct() {
-
-    //ask user to fill in all necessary information to fill columns in table
-    
-        inquirer.prompt([
-            {
-    
-                type: "input",
-                name: "inputName",
-                message: "Please enter the item name of the new product.",
-            }, {
-                type: "input",
-                name: "inputDepartment",
-                message: "Please enter which department name of which the new product belongs.",
-            }, {
-                type: "input",
-                name: "inputPrice",
-                message: "Please enter the price of the new product (0.00).",
-            }, {
-                type: "input",
-                name: "inputStock",
-                message: "Please enter the stock quantity of the new product.",
-            }
-    
-        ]).then(function(managerNew) {
-    
-          //connect to database, insert column data with input from user
-    
-          connection.query("INSERT INTO products SET ?", {
-            product_name: managerNew.inputName,
-            department_name: managerNew.inputDepartment,
-            price: managerNew.inputPrice,
-            stock_quantity: managerNew.inputStock
-          }, function(err, res) {});
-          managerPrompt();
+    inquirer.prompt([
+        {
+            name: "name",
+            type: "input",
+            message: "Please enter the item name of the new product."
+        }, {
+            name: "department",
+            type: "input",
+            message: "Please enter which department name of which the new product belongs."
+        }, {
+            name: "price",
+            type: "input",
+            message: "Please enter the price of the new product (0.00)."
+        }, {
+            name: "stock",
+            type: "input",
+            message: "Please enter the stock quantity of the new product."
+        }
+    ]).then(function (res) {
+        var sql = "INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES ('"+res.name+"', '"+res.department+"', "+res.price+", "+res.stock+")";
+        console.log(sql);
+        connection.query(sql, function (error, response) {
+            if (error) throw error;
+            console.log("item added")
         });
-      }
-
-// function addProduct() {
-//     inquirer.prompt([{
-//         type: "input",
-//         name: "inputName",
-//         message: "What is the name of the new product?"
-//     }, {
-//         type: "input",
-//         name: "inputID",
-//         message: "What ID number would you like to give this new product?"
-//     }, {
-//         type: "input",
-//         name: "inputDept",
-//         message: "What is the name of the department you wish to add?"
-//     }, {
-//         type: "input",
-//         name: "inputPrice",
-//         message: "What is the price per item?",
-//     }, {
-//         type: "input",
-//         name: "inputQuantity",
-//         message: "How many of this item do we have for stock?",
-//     }]).then(function (newProduct) {
-//         var name = newProduct.inputName;
-//         var ID = newProduct.inputID;
-//         var department = newProduct.inputDept;
-//         var price = newProduct.inputPrice;
-//         var qty = newProduct.inputQuantity;
-//         addNewProduct(name, ID, department, price, qty);
-//     });
-// };
-
-// function addNewProduct() {
-//     connection.query('INSERT INTO products (item_id,product_name,department_name,price,stock_quantity) VALUES("' + name + '","' + ID + '","' + department + '",' + price + ',' + quantity + ')');
-//     productDisplay();
-// }
-
-productDisplay();
+        productDisplay();
+    });
+};
 
 // node bamazonManager.js
