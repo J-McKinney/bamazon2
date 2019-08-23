@@ -1,36 +1,26 @@
 # bamazon 2.0
 
-In this assignment, I made LIRI. LIRI is like iPhone's SIRI. However, while SIRI is a Speech Interpretation and Recognition Interface, LIRI is a _Language_ Interpretation and Recognition Interface. LIRI will be a command line node app that takes in parameters and gives you back data.
+In this assignment, I made Bamazon. It's a backend copycat version of Amazon. Bamazon is a command Line Interface app paired with a product database.
 
 ## Screenshots:
 ### Click on the link below
-https://solid513.github.io/liri-screenshots/
+https://solid513.github.io/bamazon2/
 
 ## Description:
-* LIRI is a _Language_ Interpretation and Recognition Interface. LIRI will be a command line node app that takes in parameters and gives you back data.
-* Liri takes in a command from the terminal, using command line node. Node then makes a call to specific API's and retrieves certain information
-to present to the user.
-* By using Spotify, Axios(OMDB and BandsInTown), and MomentJS. The user can access information about a given movie, song or concert that they
-desire.
-* My goal of this project is to understand Back-End Programming and how to utilize NPM's and Modules, along with importing and exporting data.
+* Bamazon will be a command line interface app, it takes in a database list of products and displays them in the terminal for a user to purchase. Or a manager to update.
+* Bamazon takes in a command from the terminal, using the command line. Node then makes a call to a specific database(MySQL) and retrieves certain information to present to the user.
+* My goal of this project is to understand Back-End Programming and how to utilize NPM's, Modules, Node, and MySQL along with importing and exporting data.
 
 ## Instructions:
-1. Fork the code to you preferred coding app.
-2. Open your terminal on the liri.js file.
-3. Download the NPM package and check to see if it's the correct edition.
-4. By using the code: 
-* First: node liri.js
-  - Followed with: spotify-this, movie-this, concert-this, or do-what-it-says
-  - With the exception of do-what-it-says
-  - Follow the first three with either a spotify song, a movie, or an upcoming concert of your choice
-5. The final look of the code in your terminal should look like this:
-* node liri.js movie-this jurassic park
-* node liri.js spotify-this red hot chili peppers
-* node liri.js concert-this slash
-* node liri.js do-what-it-says
-6. The terminal will then show the user information on the command they gave.
-7. If no movie, song, or concert was typed in. The program will run its default choice for that command line.
-8. And finally, have fun! Go nuts!
+1. Fork the repo
+2. Open the code in your prefered code terminal
+3. Open your terminal
+4. Open your favorite database SQL
+5. Copy the SQL code from the code terminal and paste into your database terminal
+6. Going back to your code terminal, open bash
+7. Run "node bamazonCustomer.js" in the terminal opened for bamazonCustomer.js
+8. Or run "node bamazonManager.js" in the terminal opened for bamazonManager.js
+9. Follow the instructions and have some fun with it
 
 ## Portfolio:
 ### Click on the link below
